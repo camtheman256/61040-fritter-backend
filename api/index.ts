@@ -22,7 +22,9 @@ if (!mongoConnectionUrl) {
 }
 
 mongoose
-  .connect(mongoConnectionUrl)
+  .connect(mongoConnectionUrl, {
+    dbName: process.env.DB_NAME
+  })
   .then(m => {
     console.log('Connected to MongoDB');
     const db = m.connection;
