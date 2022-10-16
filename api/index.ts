@@ -84,6 +84,8 @@ app.all('*', (req: Request, res: Response) => {
   res.status(400).render('error');
 });
 
+module.exports = app;
+
 // Create server to listen to request at specified port
 const server = http.createServer(app);
 server.listen(app.get('port'), () => {
