@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 // Show an object on the screen.
 function showObject(obj) {
@@ -42,7 +43,8 @@ const formsAndHandlers = {
   'delete-freet': deleteFreet,
   'follow-user': follow,
   'unfollow-user': unfollow,
-  'create-community': createCommunity
+  'create-community': createCommunity,
+  'get-community': getCommunity
 };
 
 // Attach handlers to forms
@@ -63,6 +65,12 @@ window.onload = init;
 
 function createCommunity(fields) {
   fetch('/api/communities', {method: 'POST', body: JSON.stringify(fields), headers: {'Content-Type': 'application/json'}})
+    .then(showResponse)
+    .catch(showResponse);
+}
+
+function getCommunity(fields) {
+  fetch(`/api/communities/${fields.name}`)
     .then(showResponse)
     .catch(showResponse);
 }
