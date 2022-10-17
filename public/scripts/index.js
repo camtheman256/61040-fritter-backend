@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 // Show an object on the screen.
 function showObject(obj) {
   const pre = document.getElementById('response');
@@ -40,7 +41,8 @@ const formsAndHandlers = {
   'edit-freet': editFreet,
   'delete-freet': deleteFreet,
   'follow-user': follow,
-  'unfollow-user': unfollow
+  'unfollow-user': unfollow,
+  'create-community': createCommunity
 };
 
 // Attach handlers to forms
@@ -58,3 +60,9 @@ function init() {
 
 // Attach handlers once DOM is ready
 window.onload = init;
+
+function createCommunity(fields) {
+  fetch('/api/communities', {method: 'POST', body: JSON.stringify(fields), headers: {'Content-Type': 'application/json'}})
+    .then(showResponse)
+    .catch(showResponse);
+}

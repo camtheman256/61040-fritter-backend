@@ -379,11 +379,13 @@ Empty body
 **Returns**
 
 - A success message
+- The new community
 
 **Throws**
 
 - `403` if user is not logged in
 - `409` if the community name is already in use
+- `400` if the body is malformed
 
 #### `GET /api/communities/:name` - Displays Community information
 
