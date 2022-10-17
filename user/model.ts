@@ -12,13 +12,16 @@ export type User = {
   username: string;
   password: string;
   dateJoined: Date;
+  /** The list of user IDs that a user follows */
+  followers: Types.ObjectId[];
+  /** The list of user IDs that a user is following */
+  following: Types.ObjectId[];
 };
 
 // Mongoose schema definition for interfacing with a MongoDB table
 // Users stored in this table will have these fields, with the
 // type given by the type property, inside MongoDB
 const UserSchema = new Schema({
-  // The user's username
   username: {
     type: String,
     required: true
@@ -32,7 +35,9 @@ const UserSchema = new Schema({
   dateJoined: {
     type: Date,
     required: true
-  }
+  },
+  followers: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  following: [{type: Schema.Types.ObjectId, ref: 'User'}]
 });
 
 const UserModel = model<User>('User', UserSchema);

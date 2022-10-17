@@ -91,6 +91,36 @@ class UserCollection {
     const user = await UserModel.deleteOne({_id: userId});
     return user !== null;
   }
+
+  /**
+   * Follow a user
+   *
+   * @param userId - The userId of the user attempting to follow
+   * @param userFollow - The userId of the user to follow
+   */
+  static async follow(userId: Types.ObjectId | string, userFollow: Types.ObjectId | string) {
+    const user = await UserModel.findOne({_id: userId});
+    const follow = await UserModel.findOne({_id: userFollow});
+    user.following.push(follow._id);
+    follow.followers.push(user._id);
+    await user.save();
+    await follow.save();
+  }
+
+  /**
+   * Unfollow a user
+   *
+   * @param userId - The userId of the user attempting to unfollow
+   * @param userUnfollow - The userId of the user to unfollow
+   */
+  static async unfollow(userId: Types.ObjectId | string, userUnfollow: Types.ObjectId | string) {
+    const user = await UserModel.findOne({_id: userId});
+    const unfollow = await UserModel.findOne({_id: userUnfollow});
+    user.following = user.following.filter(id => !id.equals(unfollow._id));
+    unfollow.followers = unfollow.followers.filter(id => !id.equals(user._id));
+    await user.save();
+    await unfollow.save();
+  }
 }
 
 export default UserCollection;

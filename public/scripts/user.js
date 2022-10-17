@@ -38,3 +38,15 @@ function signOut() {
     .then(showResponse)
     .catch(showResponse);
 }
+
+function follow(fields) {
+  fetch(`/api/users/${fields.follow}/followers`, {method: 'PATCH'})
+    .then(showResponse)
+    .catch(showResponse);
+}
+
+function unfollow(fields) {
+  fetch(`/api/users/${fields.unfollow}/followers`, {method: 'DELETE'})
+    .then(showResponse)
+    .catch(showResponse);
+}

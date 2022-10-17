@@ -153,6 +153,21 @@ const isAuthorExists = async (req: Request, res: Response, next: NextFunction) =
   next();
 };
 
+/**
+ * Checks if a user in the URL bar is a valid user
+ */
+const isUserAccountExists = async (req: Request, res: Response, next: NextFunction) => {
+  const user = await UserCollection.findOneByUsername(req.params.user);
+  if (!user) {
+    res.status(404).json({
+      error: `A user with username ${req.params.user} doesn't exist.`
+    });
+    return;
+  }
+
+  next();
+};
+
 export {
   isCurrentSessionUserExists,
   isUserLoggedIn,
@@ -161,5 +176,6 @@ export {
   isAccountExists,
   isAuthorExists,
   isValidUsername,
-  isValidPassword
+  isValidPassword,
+  isUserAccountExists
 };

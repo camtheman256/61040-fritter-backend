@@ -4,6 +4,7 @@ import FreetCollection from '../freet/collection';
 import UserCollection from './collection';
 import * as userValidator from '../user/middleware';
 import * as util from './util';
+import {Types} from 'mongoose';
 
 const router = express.Router();
 
@@ -144,6 +145,54 @@ router.delete(
     req.session.userId = undefined;
     res.status(200).json({
       message: 'Your account has been deleted successfully.'
+    });
+  }
+
+);
+
+router.patch(
+  '/:user/followers',
+  [userValidator.isUserLoggedIn, userValidator.isUserAccountExists],
+  async (req: Request, res: Response) => {
+    const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
+    const follow = await UserCollection.findOneByUsername(req.params.user);
+    if (follow._id.toString() === userId) {
+      res.status(403).json({
+        error: 'Cannot follow self.'
+      });
+      return;
+    }
+
+    if (follow.followers.includes(new Types.ObjectId(userId))) {
+      res.status(403).json({
+        error: `User already follows ${follow.username}.`
+      });
+      return;
+    }
+
+    await UserCollection.follow(userId, follow._id);
+    res.status(200).json({
+      message: `User ${follow.username} followed successfully`
+    });
+  }
+);
+
+router.delete(
+  '/:user/followers',
+  [userValidator.isUserLoggedIn, userValidator.isUserAccountExists],
+  async (req: Request, res: Response) => {
+    const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
+    const follow = await UserCollection.findOneByUsername(req.params.user);
+    if (follow._id.toString() === userId) {
+      res.status(403).json({
+        error: 'Cannot unfollow self.'
+      });
+      return;
+    }
+
+    await UserCollection.unfollow(userId, follow._id);
+    res.status(200).json({
+      message: `User ${follow.username} unfollowed successfully`
     });
   }
 );

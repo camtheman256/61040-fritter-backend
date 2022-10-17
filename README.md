@@ -350,6 +350,7 @@ Empty body
 - `403` if user not logged in
 - `403` if `user` is self
 - `404` if `user` doesn't exist
+- `403` if `user` is already followed
 
 #### `DELETE /api/users/:user/followers` - Unfollow a user
 
