@@ -398,7 +398,7 @@ Empty body
 
 - `404` if community doesn't exist
 
-#### `POST /api/communities/:name` - Join a community
+#### `PUT /api/communities/:name` - Join a community
 
 **Body**
 
@@ -412,6 +412,7 @@ Empty body
 
 - `403` if user is not logged in
 - `403` if the user is banned
+- `404` if the community doesn't exist
 
 #### `DELETE /api/communities/:name` - Leave a community
 

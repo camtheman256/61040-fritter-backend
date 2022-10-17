@@ -44,7 +44,9 @@ const formsAndHandlers = {
   'follow-user': follow,
   'unfollow-user': unfollow,
   'create-community': createCommunity,
-  'get-community': getCommunity
+  'get-community': getCommunity,
+  'join-community': joinCommunity,
+  'leave-community': leaveCommunity
 };
 
 // Attach handlers to forms
@@ -71,6 +73,18 @@ function createCommunity(fields) {
 
 function getCommunity(fields) {
   fetch(`/api/communities/${fields.name}`)
+    .then(showResponse)
+    .catch(showResponse);
+}
+
+function joinCommunity(fields) {
+  fetch(`/api/communities/${fields.name}`, {method: 'PUT'})
+    .then(showResponse)
+    .catch(showResponse);
+}
+
+function leaveCommunity(fields) {
+  fetch(`/api/communities/${fields.name}`, {method: 'DELETE'})
     .then(showResponse)
     .catch(showResponse);
 }

@@ -6,6 +6,6 @@ import CommunityModel from './model';
  * @param name the name of the community
  * @returns a community with the name, or null
  */
-export async function findOneByCommunityName(name: string): Promise<Community> {
+export async function findOneByCommunityName(name: string) {
   return CommunityModel.findOne({name});
 }
