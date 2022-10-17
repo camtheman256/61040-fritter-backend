@@ -14,7 +14,8 @@ router.post('/', [userValidator.isUserLoggedIn, isCommunityNameValid], async (re
   const communityName = req.body.name as string;
   const newCommunity = new CommunityModel({
     name: communityName,
-    moderators: [new Types.ObjectId(req.session.userId)]
+    moderators: [new Types.ObjectId(req.session.userId)],
+    members: [new Types.ObjectId(req.session.userId)]
   });
   await newCommunity.save();
 
