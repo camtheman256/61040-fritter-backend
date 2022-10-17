@@ -1,0 +1,22 @@
+{
+    "API Route": {
+        "prefix": ["route"],
+        "body": [
+            "#### `${3:GET} /api/${1:router}${2:/route}` - ${4:Route Description}",
+            "",
+            "**Body**",
+            "",
+            "- `${5:param}` _{${6:type}}_ - ${7:Description}",
+            "",
+            "**Returns**",
+            "",
+            "- A success message${8}",
+            "",
+            "**Throws**",
+            "",
+            "- `${9:400}` if ${10:reason}${11}"
+        ],
+        "description": "An API route definition for the README file",
+        "scope": "markdown"
+    }
+}

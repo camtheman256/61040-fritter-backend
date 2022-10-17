@@ -171,9 +171,13 @@ within the schema. This tells us that the `content` field must have type `String
 
 The following api routes have already been implemented for you (**Make sure to document all the routes that you have added.**):
 
+### Index page
+
 #### `GET /`
 
 This renders the `index.html` file that will be used to interact with the backend
+
+### Freets API
 
 #### `GET /api/freets` - Get all the freets
 
@@ -240,6 +244,23 @@ This renders the `index.html` file that will be used to interact with the backen
 - `400` if the new freet content is empty or a stream of empty spaces
 - `413` if the new freet content is more than 140 characters long
 
+#### `DELETE /api/freets/:freetId/community` - Remove a freet from a community
+
+**Body**
+
+Empty body
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if user is not logged in
+- `403` if user is not a moderator of the freet's community
+
+### Users API
+
 #### `POST /api/users/session` - Sign in user
 
 **Body**
@@ -256,7 +277,7 @@ This renders the `index.html` file that will be used to interact with the backen
 
 - `403` if the user is already logged in
 - `400` if username or password is not in correct format format or missing in the req
-- `401` if the user login credentials are invalid
+- `403` if the user login credentials are invalid
 
 #### `DELETE /api/users/session` - Sign out user
 
@@ -313,3 +334,188 @@ This renders the `index.html` file that will be used to interact with the backen
 **Throws**
 
 - `403` if the user is not logged in
+
+#### `PATCH /api/users/:user/followers` - Follow a user
+
+**Body**
+
+Empty body
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if user not logged in
+- `403` if `user` is self
+- `404` if `user` doesn't exist
+
+#### `DELETE /api/users/:user/followers` - Unfollow a user
+
+**Body**
+
+Empty body
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if user not logged in
+- `403` if `user` is self
+- `404` if `user` doesn't exist
+
+### Communities API
+
+#### `POST /api/communities` - Creates a new community
+
+**Body**
+
+- `name` *{string}* - The name of the community
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if user is not logged in
+- `409` if the community name is already in use
+
+#### `GET /api/communities/:name` - Displays Community information
+
+**Returns**
+
+- A success message
+- An object with community name, members, moderators, and freets
+
+**Throws**
+
+- `404` if community doesn't exist
+
+#### `POST /api/communities/:name` - Join a community
+
+**Body**
+
+Empty body
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if user is not logged in
+- `403` if the user is banned
+
+#### `DELETE /api/communities/:name` - Leave a community
+
+**Body**
+
+Empty body
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if user is not logged in
+- `403` if the user is not a member of the community
+
+#### `PUT /api/communities/:name/moderators` - Update community moderators
+
+**Body**
+
+- `moderators` _{string[]}_ - the list of moderators for the community
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if user is not logged in
+- `403` if user is not a moderator
+
+#### `PUT /api/communities/:name/bans` - Update banned users
+
+**Body**
+
+- `bans` _{string[]}_ - the list of banned usernames
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if user is not logged in
+- `403` if user is not a moderator
+
+### Briefing API
+
+#### `GET /api/briefing` - Get Briefing
+
+**Query Params**
+
+- `hours` _{int}_ (default: 12) - the number of hours to include in the briefing
+
+**Returns**
+
+- A success message
+- An object with the freets in the Briefing and the timeframe for the Briefing
+
+**Throws**
+
+- `403` if user is not logged in
+
+### Feed API
+
+#### `POST /api/feed` - Refresh a user's feed and get freets
+
+**Body**
+
+Empty body
+
+**Returns**
+
+- A success message
+- An object with the Feed ID, number of pages, and the freets in the feed's first page
+
+**Throws**
+
+- `403` if user not logged in
+
+#### `GET /api/feed` - Get the most recent feed for a user
+
+**Query Params**
+
+- `page` _{int}_ (default: 1) - the page of freets to get
+
+**Returns**
+
+- A success message
+- A list of freets in the page
+
+**Throws**
+
+- `403` if user not logged in
+- `404` if the page does not exist
+
+#### `PUT /api/feed/settings` - Update Feed Settings for a user
+
+**Body**
+
+- `freets` _{int}_ - number of freets to show in total
+- `page_length` _{int}_ - number of freets to show per page
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `403` if user not logged in
