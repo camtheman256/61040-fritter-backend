@@ -1,12 +1,22 @@
+import type {Freet} from 'freet/model';
 import type {Types} from 'mongoose';
 import mongoose, {SchemaTypes} from 'mongoose';
 import {Schema} from 'mongoose';
+import type {User} from 'user/model';
 
 type Feed = {
   _id: Types.ObjectId;
   loaded: Date;
   user: Types.ObjectId;
   freets: Types.ObjectId[];
+  settings: FeedSettings;
+};
+
+type PopulatedFeed = {
+  _id: Types.ObjectId;
+  loaded: Date;
+  user: User;
+  freets: Freet[];
   settings: FeedSettings;
 };
 
