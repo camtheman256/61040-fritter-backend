@@ -433,7 +433,7 @@ Empty body
 
 **Body**
 
-- `moderators` _{string[]}_ - the list of moderators for the community
+- `moderators` _{string[]}_ - the list of moderator usernames for the community
 
 **Returns**
 
@@ -443,6 +443,7 @@ Empty body
 
 - `403` if user is not logged in
 - `403` if user is not a moderator
+- `404` if any of the users doesn't exist
 
 #### `PUT /api/communities/:name/bans` - Update banned users
 
@@ -458,6 +459,7 @@ Empty body
 
 - `403` if user is not logged in
 - `403` if user is not a moderator
+- `404` if any of the users doesn't exist
 
 ### Briefing API
 

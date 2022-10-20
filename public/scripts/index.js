@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 // Show an object on the screen.
 function showObject(obj) {
   const pre = document.getElementById('response');
@@ -46,7 +48,9 @@ const formsAndHandlers = {
   'create-community': createCommunity,
   'get-community': getCommunity,
   'join-community': joinCommunity,
-  'leave-community': leaveCommunity
+  'leave-community': leaveCommunity,
+  'update-moderators': updateModerators,
+  'update-bans': updateBans
 };
 
 // Attach handlers to forms
@@ -86,5 +90,27 @@ function joinCommunity(fields) {
 function leaveCommunity(fields) {
   fetch(`/api/communities/${fields.name}`, {method: 'DELETE'})
     .then(showResponse)
+    .catch(showResponse);
+}
+
+function updateModerators(fields) {
+  fetch(`/api/communities/${fields.name}/moderators`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      moderators: fields.mods ? fields.mods.split(',') : []
+    }),
+    headers: {'Content-Type': 'application/json'}
+  }).then(showResponse)
+    .catch(showResponse);
+}
+
+function updateBans(fields) {
+  fetch(`/api/communities/${fields.name}/bans`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      bans: fields.bans ? fields.bans.split(',') : []
+    }),
+    headers: {'Content-Type': 'application/json'}
+  }).then(showResponse)
     .catch(showResponse);
 }

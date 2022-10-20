@@ -3,8 +3,9 @@ import express from 'express';
 import {Types} from 'mongoose';
 import * as userValidator from '../user/middleware';
 import {findOneByCommunityName} from './collection';
-import {isCommunityExists, isCommunityNameValid} from './middleware';
+import {isCommunityExists, isCommunityNameValid, isUserModerator} from './middleware';
 import CommunityModel from './model';
+import UserCollection from '../user/collection';
 
 const router = express.Router();
 
@@ -61,5 +62,66 @@ router.delete('/:name', [userValidator.isUserLoggedIn, isCommunityExists], async
     message: `Left ${req.params.name} successfully.`
   });
 });
+
+router.put('/:name/moderators',
+  [userValidator.isUserLoggedIn, isCommunityExists, isUserModerator],
+  async (req: Request, res: Response) => {
+    console.log('top!');
+    if (!(req.body.moderators instanceof Array)) {
+      res.status(400).json({
+        error: 'Malformed input'
+      });
+      return;
+    }
+
+    const usernames = req.body.moderators as string[] ?? [];
+    const users = await Promise.all(usernames.map(async un => UserCollection.findOneByUsername(un)));
+    console.log(users);
+    if (users.some(u => u === null)) {
+      res.status(404).json({
+        error: 'Some usernames were invalid.'
+      });
+      return;
+    }
+
+    const community = await findOneByCommunityName(req.params.name);
+    community.moderators = users.map(u => u._id);
+    await community.save();
+    res.status(200).json({
+      message: 'Moderators set successfully.',
+      community
+    });
+  });
+
+router.put(
+  '/:name/bans',
+  [userValidator.isUserLoggedIn, isCommunityExists, isUserModerator],
+  async (req: Request, res: Response) => {
+    if (!(req.body.bans instanceof Array)) {
+      res.status(400).json({
+        error: 'Malformed input'
+      });
+      return;
+    }
+
+    const usernames = req.body.bans as string[] ?? [];
+
+    const users = await Promise.all(usernames.map(async un => UserCollection.findOneByUsername(un)));
+    if (users.some(u => u === null)) {
+      res.status(404).json({
+        error: 'Some usernames were invalid.'
+      });
+      return;
+    }
+
+    const community = await findOneByCommunityName(req.params.name);
+    community.banned = users.map(u => u._id);
+    await community.save();
+    res.status(200).json({
+      message: 'Bans set successfully.',
+      community
+    });
+  }
+);
 
 export default router;
