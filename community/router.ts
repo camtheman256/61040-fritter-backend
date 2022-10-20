@@ -116,6 +116,7 @@ router.put(
 
     const community = await findOneByCommunityName(req.params.name);
     community.banned = users.map(u => u._id);
+    community.members = community.members.filter(u => !users.some(b => b._id.equals(u)));
     await community.save();
     res.status(200).json({
       message: 'Bans set successfully.',

@@ -17,15 +17,17 @@ class FreetCollection {
    *
    * @param {string} authorId - The id of the author of the freet
    * @param {string} content - The id of the content of the freet
+   * @param {string} community the community to post to
    * @return {Promise<HydratedDocument<Freet>>} - The newly created freet
    */
-  static async addOne(authorId: Types.ObjectId | string, content: string): Promise<HydratedDocument<Freet>> {
+  static async addOne(authorId: Types.ObjectId | string, content: string, community: Types.ObjectId | string): Promise<HydratedDocument<Freet>> {
     const date = new Date();
     const freet = new FreetModel({
       authorId,
       dateCreated: date,
       content,
-      dateModified: date
+      dateModified: date,
+      community
     });
     await freet.save(); // Saves freet to MongoDB
     return freet.populate('authorId');

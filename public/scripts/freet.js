@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 
 /**
@@ -18,7 +19,10 @@ function viewFreetsByAuthor(fields) {
 }
 
 function createFreet(fields) {
-  fetch('/api/freets', {method: 'POST', body: JSON.stringify(fields), headers: {'Content-Type': 'application/json'}})
+  fetch('/api/freets', {method: 'POST', body: JSON.stringify({
+    content: fields.content,
+    community: fields.community ? fields.community : null
+  }), headers: {'Content-Type': 'application/json'}})
     .then(showResponse)
     .catch(showResponse);
 }

@@ -1,9 +1,11 @@
 import type {NextFunction, Request, Response} from 'express';
 import express from 'express';
 import FreetCollection from './collection';
-import * as userValidator from '../user/middleware';
-import * as freetValidator from '../freet/middleware';
+import * as userValidator from 'user/middleware';
+import * as freetValidator from 'freet/middleware';
 import * as util from './util';
+import {findOneByCommunityName} from 'community/collection';
+import {Types} from 'mongoose';
 
 const router = express.Router();
 
@@ -67,7 +69,28 @@ router.post(
   ],
   async (req: Request, res: Response) => {
     const userId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isUserLoggedIn
-    const freet = await FreetCollection.addOne(userId, req.body.content);
+    let communityId = null;
+    if (typeof req.body.community === 'string') {
+      const communityName = req.body.community as string ?? '';
+      const community = await findOneByCommunityName(communityName);
+      if (community === null) {
+        res.status(404).json({
+          error: `Community ${communityName} doesn't exist`
+        });
+        return;
+      }
+
+      communityId = community._id;
+
+      if (!community.members.includes(new Types.ObjectId(userId))) {
+        res.status(403).json({
+          error: `You're not a member of ${communityName}`
+        });
+        return;
+      }
+    }
+
+    const freet = await FreetCollection.addOne(userId, req.body.content, communityId);
 
     res.status(201).json({
       message: 'Your freet was created successfully.',

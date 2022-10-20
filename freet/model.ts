@@ -1,5 +1,6 @@
 import type {Types} from 'mongoose';
 import {model, Schema} from 'mongoose';
+import type {Community} from '../community/model';
 import type {User} from '../user/model';
 
 /**
@@ -14,6 +15,7 @@ export type Freet = {
   dateCreated: Date;
   content: string;
   dateModified: Date;
+  community: Types.ObjectId;
 };
 
 export type PopulatedFreet = {
@@ -22,6 +24,7 @@ export type PopulatedFreet = {
   dateCreated: Date;
   content: string;
   dateModified: Date;
+  community: Community;
 };
 
 // Mongoose schema definition for interfacing with a MongoDB table
@@ -49,6 +52,10 @@ const FreetSchema = new Schema<Freet>({
   dateModified: {
     type: Date,
     required: true
+  },
+  community: {
+    type: Schema.Types.ObjectId,
+    ref: 'Community'
   }
 });
 

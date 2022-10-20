@@ -201,6 +201,7 @@ This renders the `index.html` file that will be used to interact with the backen
 **Body**
 
 - `content` _{string}_ - The content of the freet
+- `community` _{string}_ - Optionally, the community to post to
 
 **Returns**
 
@@ -212,6 +213,7 @@ This renders the `index.html` file that will be used to interact with the backen
 - `403` if the user is not logged in
 - `400` If the freet content is empty or a stream of empty spaces
 - `413` If the freet content is more than 140 characters long
+- `403` If the user is not a member of community
 
 #### `DELETE /api/freets/:freetId?` - Delete an existing freet
 

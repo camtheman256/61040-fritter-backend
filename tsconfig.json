@@ -8,5 +8,8 @@
     "rootDir": "./",
     "baseUrl": "./",
     "module": "commonjs"
+  },
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
   }
 }
