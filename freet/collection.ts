@@ -98,6 +98,16 @@ class FreetCollection {
   static async deleteMany(authorId: Types.ObjectId | string): Promise<void> {
     await FreetModel.deleteMany({authorId});
   }
+
+  /**
+   * Detach a freet from its community, at moderator or author discretion.
+   * @param freetId the id of the freet
+   */
+  static async detachOne(freetId: Types.ObjectId) {
+    const freet = await FreetModel.findById(freetId);
+    freet.community = null;
+    await freet.save();
+  }
 }
 
 export default FreetCollection;

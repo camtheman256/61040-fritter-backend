@@ -38,3 +38,9 @@ function deleteFreet(fields) {
     .then(showResponse)
     .catch(showResponse);
 }
+
+function detachFreet(fields) {
+  fetch(`/api/freets/${fields.id}/community`, {method: 'DELETE'})
+    .then(showResponse)
+    .catch(showResponse);
+}

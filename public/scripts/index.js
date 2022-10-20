@@ -50,7 +50,8 @@ const formsAndHandlers = {
   'join-community': joinCommunity,
   'leave-community': leaveCommunity,
   'update-moderators': updateModerators,
-  'update-bans': updateBans
+  'update-bans': updateBans,
+  'detach-freet': detachFreet
 };
 
 // Attach handlers to forms

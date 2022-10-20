@@ -154,4 +154,19 @@ router.put(
   }
 );
 
+router.delete(
+  '/:freetId?/community',
+  [
+    userValidator.isUserLoggedIn,
+    freetValidator.isFreetExists,
+    freetValidator.isValidCommunityModifier
+  ],
+  async (req: Request, res: Response) => {
+    await FreetCollection.detachOne(new Types.ObjectId(req.params.freetId));
+    res.status(200).json({
+      message: 'This freet was detached successfully.'
+    });
+  }
+);
+
 export {router as freetRouter};

@@ -66,7 +66,6 @@ router.delete('/:name', [userValidator.isUserLoggedIn, isCommunityExists], async
 router.put('/:name/moderators',
   [userValidator.isUserLoggedIn, isCommunityExists, isUserModerator],
   async (req: Request, res: Response) => {
-    console.log('top!');
     if (!(req.body.moderators instanceof Array)) {
       res.status(400).json({
         error: 'Malformed input'

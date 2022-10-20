@@ -1,3 +1,4 @@
+import CommunityModel from 'community/model';
 import type {Request, Response, NextFunction} from 'express';
 import {Types} from 'mongoose';
 import FreetCollection from '../freet/collection';
@@ -59,8 +60,27 @@ const isValidFreetModifier = async (req: Request, res: Response, next: NextFunct
   next();
 };
 
+/**
+ * Check if a user is allowed to detach a freet from a community.
+ */
+const isValidCommunityModifier = async (req: Request, res: Response, next: NextFunction) => {
+  const freet = await FreetCollection.findOne(req.params.freetId);
+  const userId = freet.authorId._id;
+  const community = await CommunityModel.findById(freet.community);
+  const loggedInId = new Types.ObjectId(req.session.userId);
+  if (req.session.userId !== userId.toString() && !community.moderators.includes(loggedInId)) {
+    res.status(403).json({
+      error: 'You don\'t have permission to detach this freet.'
+    });
+    return;
+  }
+
+  next();
+};
+
 export {
   isValidFreetContent,
   isFreetExists,
-  isValidFreetModifier
+  isValidFreetModifier,
+  isValidCommunityModifier
 };
