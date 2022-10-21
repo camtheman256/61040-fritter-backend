@@ -486,7 +486,8 @@ Empty body
 
 **Body**
 
-Empty body
+- `freets` _{int}_ - number of freets to show in total
+- `page_length` _{int}_ - number of freets to show per page
 
 **Returns**
 
@@ -496,6 +497,7 @@ Empty body
 **Throws**
 
 - `403` if user not logged in
+- `400` if malformed input
 
 #### `GET /api/feed` - Get the most recent feed for a user
 
@@ -506,24 +508,9 @@ Empty body
 **Returns**
 
 - A success message
-- A list of freets in the page
+- An object with the Feed ID, number of pages, and the freets in the feed's requested page
 
 **Throws**
 
 - `403` if user not logged in
 - `404` if the page does not exist
-
-#### `PUT /api/feed/settings` - Update Feed Settings for a user
-
-**Body**
-
-- `freets` _{int}_ - number of freets to show in total
-- `page_length` _{int}_ - number of freets to show per page
-
-**Returns**
-
-- A success message
-
-**Throws**
-
-- `403` if user not logged in

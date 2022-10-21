@@ -51,7 +51,9 @@ const formsAndHandlers = {
   'leave-community': leaveCommunity,
   'update-moderators': updateModerators,
   'update-bans': updateBans,
-  'detach-freet': detachFreet
+  'detach-freet': detachFreet,
+  'create-feed': createFeed,
+  'get-feed': getFeed
 };
 
 // Attach handlers to forms
@@ -114,4 +116,17 @@ function updateBans(fields) {
     headers: {'Content-Type': 'application/json'}
   }).then(showResponse)
     .catch(showResponse);
+}
+
+function createFeed(fields) {
+  fetch('/api/feed', {method: 'POST', body: JSON.stringify({
+    page_length: parseInt(fields.page_length, 10),
+    freets: parseInt(fields.freets, 10)
+  }), headers: {'Content-Type': 'application/json'}})
+    .then(showResponse)
+    .catch(showResponse);
+}
+
+function getFeed(fields) {
+  fetch(`/api/feed?page=${fields.page}`).then(showResponse).catch(showResponse);
 }

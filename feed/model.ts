@@ -4,7 +4,7 @@ import mongoose, {SchemaTypes} from 'mongoose';
 import {Schema} from 'mongoose';
 import type {User} from 'user/model';
 
-type Feed = {
+export type Feed = {
   _id: Types.ObjectId;
   loaded: Date;
   user: Types.ObjectId;
@@ -12,7 +12,7 @@ type Feed = {
   settings: FeedSettings;
 };
 
-type PopulatedFeed = {
+export type PopulatedFeed = {
   _id: Types.ObjectId;
   loaded: Date;
   user: User;
