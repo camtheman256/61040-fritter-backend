@@ -6,16 +6,6 @@
     "moduleResolution": "node",
     "outDir": "./dist",
     "rootDir": "./",
-    "baseUrl": ".",
     "module": "commonjs",
-    "paths": {
-      "user/*": ["user/*"],
-      "freet/*": ["freet/*"],
-      "community/*": ["community/*"],
-      "feed/*": ["feed/*"]
-    }
   },
-  "ts-node": {
-    "require": ["tsconfig-paths/register"]
-  }
 }

@@ -1,9 +1,9 @@
 import type {Request, Response} from 'express';
 import express from 'express';
-import {queryParameters} from 'feed/util';
-import FreetModel from 'freet/model';
+import {queryParameters} from '../feed/util';
 import {Types} from 'mongoose';
-import * as userValidator from 'user/middleware';
+import * as userValidator from '../user/middleware';
+import FreetModel from '../freet/model';
 
 const router = express.Router();
 

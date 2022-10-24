@@ -12,8 +12,8 @@ import * as userValidator from '../user/middleware';
 import {userRouter} from '../user/router';
 import {freetRouter} from '../freet/router';
 import communityRouter from '../community/router';
-import feedRouter from 'feed/router';
-import briefingRouter from 'briefing/router';
+import feedRouter from '../feed/router';
+import briefingRouter from '../briefing/router';
 
 // Load environmental variables
 dotenv.config({});

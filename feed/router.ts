@@ -2,7 +2,7 @@ import type {Request, Response} from 'express';
 import express from 'express';
 import type {HydratedDocument} from 'mongoose';
 import {Types} from 'mongoose';
-import * as userValidator from 'user/middleware';
+import * as userValidator from '../user/middleware';
 import {createFeed} from './collection';
 import {isValidFreetSettings} from './middleware';
 import type {PopulatedFeed} from './model';

@@ -1,7 +1,5 @@
-import CommunityModel from 'community/model';
-import FreetModel from 'freet/model';
+import FreetModel from '../freet/model';
 import type {Types} from 'mongoose';
-import UserCollection from 'user/collection';
 import FeedModel from './model';
 import {queryParameters} from './util';
 

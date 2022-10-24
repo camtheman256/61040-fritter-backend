@@ -1,8 +1,7 @@
-import CommunityModel from 'community/model';
-import type {Freet} from 'freet/model';
-import FreetModel from 'freet/model';
+import CommunityModel from '../community/model';
+import type {Freet} from '../freet/model';
 import type {Query, Types} from 'mongoose';
-import UserCollection from 'user/collection';
+import UserCollection from '../user/collection';
 
 /**
  * Gets a list of Freets for a given page of the feed.
