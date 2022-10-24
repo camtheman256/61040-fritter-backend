@@ -1,10 +1,10 @@
 import type {NextFunction, Request, Response} from 'express';
 import express from 'express';
 import FreetCollection from './collection';
-import * as userValidator from 'user/middleware';
-import * as freetValidator from 'freet/middleware';
+import * as userValidator from '../user/middleware';
+import * as freetValidator from '../freet/middleware';
 import * as util from './util';
-import {findOneByCommunityName} from 'community/collection';
+import {findOneByCommunityName} from '../community/collection';
 import {Types} from 'mongoose';
 
 const router = express.Router();

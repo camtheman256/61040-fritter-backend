@@ -1,8 +1,8 @@
-import type {Freet} from 'freet/model';
+import type {Freet} from '../freet/model';
 import type {Types} from 'mongoose';
 import mongoose, {SchemaTypes} from 'mongoose';
 import {Schema} from 'mongoose';
-import type {User} from 'user/model';
+import type {User} from '../user/model';
 
 export type Feed = {
   _id: Types.ObjectId;

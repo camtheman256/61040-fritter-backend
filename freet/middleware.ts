@@ -1,4 +1,4 @@
-import CommunityModel from 'community/model';
+import CommunityModel from '../community/model';
 import type {Request, Response, NextFunction} from 'express';
 import {Types} from 'mongoose';
 import FreetCollection from '../freet/collection';
