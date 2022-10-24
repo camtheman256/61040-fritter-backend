@@ -13,6 +13,7 @@ import {userRouter} from '../user/router';
 import {freetRouter} from '../freet/router';
 import communityRouter from '../community/router';
 import feedRouter from 'feed/router';
+import briefingRouter from 'briefing/router';
 
 // Load environmental variables
 dotenv.config({});
@@ -82,6 +83,7 @@ app.use('/api/users', userRouter);
 app.use('/api/freets', freetRouter);
 app.use('/api/communities', communityRouter);
 app.use('/api/feed', feedRouter);
+app.use('/api/briefing', briefingRouter);
 
 // Catch all the other routes and display error message
 app.all('*', (req: Request, res: Response) => {

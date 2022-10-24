@@ -3,6 +3,7 @@ import FreetModel from 'freet/model';
 import type {Types} from 'mongoose';
 import UserCollection from 'user/collection';
 import FeedModel from './model';
+import {queryParameters} from './util';
 
 /**
  * Creates a Feed and stores it in the database
@@ -12,18 +13,9 @@ import FeedModel from './model';
  * @returns a Feed
  */
 export async function createFeed(numFreets: number, pageLength: number, userId: Types.ObjectId) {
-  const user = await UserCollection.findOneByUserId(userId);
-  const communities = await CommunityModel.find({
-    members: user._id
-  });
-  const freets = await FreetModel.find({
-    $or: [
-      {authorId: {$in: user.following}},
-      {community: {$in: communities}}
-    ]
-  }).sort({dateCreated: -1}).limit(numFreets);
+  const freets = await FreetModel.find(await queryParameters(userId)).limit(numFreets);
   const feed = new FeedModel({
-    user: user._id,
+    user: userId,
     freets,
     loaded: new Date(),
     settings: {perPage: pageLength}

@@ -53,7 +53,8 @@ const formsAndHandlers = {
   'update-bans': updateBans,
   'detach-freet': detachFreet,
   'create-feed': createFeed,
-  'get-feed': getFeed
+  'get-feed': getFeed,
+  'get-briefing': getBriefing
 };
 
 // Attach handlers to forms
@@ -129,4 +130,8 @@ function createFeed(fields) {
 
 function getFeed(fields) {
   fetch(`/api/feed?page=${fields.page}`).then(showResponse).catch(showResponse);
+}
+
+function getBriefing(fields) {
+  fetch(`/api/briefing?hours=${fields.hours}`).then(showResponse).catch(showResponse);
 }
